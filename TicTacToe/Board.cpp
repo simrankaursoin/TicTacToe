@@ -74,9 +74,11 @@ void Board::checkIfSomeoneWon(){
         if (won){
             someone_won = true;
         }
+    }
+    if (!someone_won){
         //check R->L diagonal
         winner = board[0][2];
-        won = true;
+        bool won = true;
         for (int i=0; i<3; ++i){
             if (board[i][2-i] != winner){
                 won = false;
