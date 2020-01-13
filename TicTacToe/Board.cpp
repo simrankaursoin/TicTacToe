@@ -45,7 +45,7 @@ void Board::checkIfSomeoneWon(){
     }
     
     // check cols
-    while (!someone_won){
+    if (!someone_won){
         for (int col=0; col<3; ++col){
             winner = board[0][col];
             bool won = true;
@@ -61,7 +61,7 @@ void Board::checkIfSomeoneWon(){
         }
     }
     // check diagonals
-    while (!someone_won){
+    if (!someone_won){
         //check L->R diagonal
         winner = board[0][0];
         bool won = true;
@@ -221,15 +221,23 @@ int main() {
     Board game = Board();
     game.printBoard();
     while (game.getGamewinner() == 0){
-        int row;
-        cout << "Enter row number(1-3) for your move: ";
-        cin >> row;
-        --row;
-        int col;
-        cout << "Enter column number(1-3) for your move: ";
-        cin >> col;
-        --col;
-        game.userMove(row, col);
+        bool move_made = false;
+        while (!move_made){
+            int row;
+            cout << "Enter row number(1-3) for your move: ";
+            cin >> row;
+            --row;
+            int col;
+            cout << "Enter column number(1-3) for your move: ";
+            cin >> col;
+            --col;
+            if (game.userMove(row, col) == false){
+                cout << "Invalid row/column number. Try again, sorry." << endl;
+            }
+            else{
+                move_made = true;
+            }
+        }
         game.printBoard();
         
         game.checkIfBoardFull();
